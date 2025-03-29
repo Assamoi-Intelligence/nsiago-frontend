@@ -1,10 +1,10 @@
-<header class="h-[5rem] w-full bg-neutral-400 px-4 flex flex-col justify-center shadow-2xl">
+<header class="h-[5rem] w-full px-8 flex flex-col justify-center shadow">
   <div class="flex justify-between items-center">
     <div class="text-2xl">NSIAGO'ELLES</div>
-    <ul class="flex items-center gap-4">
-      <li>Simulations</li>
-      <li>Souscriptions</li>
-      <li>Utilisateurs</li>
+    <ul class="flex items-center gap-6">
+      <li class="cursor-pointer">Simulations</li>
+      <li class="cursor-pointer">Souscriptions</li>
+      @if(currentUser()?.role == 'ADMIN') {<li>Utilisateurs</li>}
       <li><p-button label="Deconnexion" severity="danger" (onClick)="logout()" /></li>
     </ul>
   </div>

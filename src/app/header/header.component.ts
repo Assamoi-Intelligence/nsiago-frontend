@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -9,9 +9,15 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  currentUser = this.authService.currentUser;
+
+  ngOnInit(): void {
+      const token = localStorage.getItem("access_token");
+      this.authService.decodeToken(token!);
+  }
 
   logout() {
     if (!confirm('Voulez-vous vous déconnectez ?')) return;

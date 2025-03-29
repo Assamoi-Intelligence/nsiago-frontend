@@ -42,6 +42,7 @@ export class SigninComponent {
     const {email, password} = this.form.getRawValue();
     this.authService.signIn(email, password).then((value) => {
       localStorage.setItem('access_token', value.access_token);
+      console.log(this.authService.decodeToken(value.access_token));
       this.router.navigate(['/home']);
     }).catch(err => this.handleError(err, "ERROR LOGIN")).finally(() => {
       this.loading.set(false);
