@@ -1,0 +1,31 @@
+<main class="h-screen w-full bg-neutral-100 flex flex-col items-center justify-center">
+  <form [formGroup]="form" class="shadow w-[30rem] h-[18rem] p-6 flex flex-col gap-5 bg-white rounded-xs">
+    <div class="self-center text-lg font-semibold">NSIAGO'ELLES</div>
+    <div class="flex flex-col gap-5 w-full">
+      <p-floatLabel variant="on">
+        <input class="w-full" id="email" type="text" pInputText formControlName="email" />
+        <label for="email">Email</label>
+      </p-floatLabel>
+      <p-floatLabel variant="on">
+          <input class="w-full" id="password" type="password" pInputText formControlName="password" />
+          <label for="password">Mot de passe</label>
+      </p-floatLabel>
+      <p-button
+        type="submit"
+        styleClass="w-full"
+        class="w-full"
+        (onClick)="signUp()"
+        [disabled]="!form.valid"
+        [loading]="loading()"
+        label="S'inscrire"
+        [raised]="true"
+        severity="info"
+      />
+      <span
+        [routerLink]="['/auth', 'signin']"
+        class="self-end text-sm italic underline text-blue-900 cursor-pointer">
+        Se connecter
+      </span>
+    </div>
+  </form>
+</main>
