@@ -2,8 +2,8 @@
   <div class="flex justify-between items-center">
     <div class="text-2xl">NSIAGO'ELLES</div>
     <ul class="flex items-center gap-6">
-      <li class="cursor-pointer">Simulations</li>
-      <li class="cursor-pointer">Souscriptions</li>
+      <li class="cursor-pointer" [routerLink]="['/home/simulations']">Simulations</li>
+      <li class="cursor-pointer" [routerLink]="['/home/subscriptions']">Souscriptions</li>
       @if(currentUser()?.role == 'ADMIN') {<li>Utilisateurs</li>}
       <li><p-button label="Deconnexion" severity="danger" (onClick)="logout()" /></li>
     </ul>

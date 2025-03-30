@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SimulationsService } from '../simulations.service';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
@@ -12,6 +12,9 @@ import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../auth/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { DatePickerModule } from 'primeng/datepicker';
+import { DividerModule } from 'primeng/divider';
+import { Simulation } from '../../models/simulation';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -24,7 +27,9 @@ import { DatePickerModule } from 'primeng/datepicker';
     SelectModule,
     ButtonModule,
     ToastModule,
-    DatePickerModule
+    DatePickerModule,
+    CommonModule,
+    DividerModule
   ],
   providers: [MessageService],
   templateUrl: './simulation-add.component.html',
@@ -32,10 +37,12 @@ import { DatePickerModule } from 'primeng/datepicker';
 })
 export class SimulationAddComponent implements OnInit {
   private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
   private simulationsService = inject(SimulationsService);
   private messageService = inject(MessageService);
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
+  simulation = model<Simulation | null | undefined>(this.config.data?.simulation ?? null);
 
   private currentUser = this.authService.currentUser();
 
@@ -84,7 +91,7 @@ export class SimulationAddComponent implements OnInit {
     this.simulationsService.createSimulation({
       circulationDate, power, productCode, userId: this.currentUser!.id, valueNew, valueVenal, vehicleCategoryCode
     }).then(result => {
-      console.log(result);
+      this.simulation.set(result);
     }).catch(err => this.handleError(err, "ERROR SIMULATION")).finally(() => this.loading.set(false));
   }
 }

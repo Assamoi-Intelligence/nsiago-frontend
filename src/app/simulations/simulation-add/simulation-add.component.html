@@ -1,75 +1,122 @@
 <section class="mt-4">
-  <form [formGroup]="form" class="flex flex-col gap-4" >
+  @if (simulation()) {
+    <div class="flex flex-col px-4">
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Reference devis</div>
+        <div class="text-xl font-semibold text-amber-700">{{ simulation()?.quoteReference }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg" >Prix</div>
+        <div class="text-xl font-semibold text-amber-700">{{ simulation()?.price | currency: 'XOF' }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Date de fin</div>
+        <div class="text-xl font-semibold text-amber-700">{{ simulation()?.endDate | date: 'dd/MM/yyyy' }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Produit</div>
+        <div class="text-xl font-semibold text-amber-700">{{ simulation()?.product?.name }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Valeur neuf</div>
+        <div class="text-xl font-semibold">{{ simulation()?.valueNew | currency: 'XOF'  }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Valeur vénal</div>
+        <div class="text-xl font-semibold">{{ simulation()?.valueVenal | currency: 'XOF' }}</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Puissance</div>
+        <div class="text-xl font-semibold">{{ simulation()?.power }} CV</div>
+      </div>
+      <p-divider />
+      <div class="flex items-center justify-between">
+        <div class="text-lg">Date de circulation</div>
+        <div class="text-xl font-semibold">{{ simulation()?.circulationDate | date: 'dd/MM/yyyy' }}</div>
+      </div>
+      <p-divider />
+      <p-button styleClass="w-full" severity="warn" label="Souscrire" />
+    </div>
+  } @else {
+    <form [formGroup]="form" class="flex flex-col gap-4" >
 
-    <p-floatlabel class="w-full" variant="on">
-      <p-select
-        [autofocus]="false"
-        formControlName="productCode"
-        inputId="productCode"
-        [options]="products()"
-        optionLabel="name"
-        optionValue="code"
+      <p-floatlabel class="w-full" variant="on">
+        <p-select
+          [autofocus]="false"
+          formControlName="productCode"
+          inputId="productCode"
+          [options]="products()"
+          optionLabel="name"
+          optionValue="code"
+          styleClass="w-full"
+        />
+        <label for="productCode">Produit</label>
+      </p-floatlabel>
+      <p-floatlabel class="w-full" variant="on">
+        <p-select
+          [autofocus]="false"
+          formControlName="vehicleCategoryCode"
+          inputId="vehicleCategoryCode"
+          [options]="categories()"
+          optionLabel="label"
+          optionValue="code"
+          styleClass="w-full"
+        />
+        <label for="vehicleCategoryCode">Categorie Véhicule</label>
+      </p-floatlabel>
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          class="w-full"
+          formControlName="power"
+          inputId="power"
+        />
+        <label for="power">Puissance</label>
+      </p-floatlabel>
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          class="w-full"
+          formControlName="valueNew"
+          inputId="valueNew"
+          mode="currency"
+          currency="XOF" locale="en-US"
+        />
+        <label for="valueNew">Valeur à neuf</label>
+      </p-floatlabel>
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          class="w-full"
+          formControlName="valueVenal"
+          inputId="valueVenal"
+          mode="currency"
+          currency="XOF" locale="en-US"
+        />
+        <label for="valueNew">Valeur vénale</label>
+      </p-floatlabel>
+      <p-floatlabel variant="on">
+        <p-datepicker
+          formControlName="circulationDate"
+          inputId="circulationDate"
+          showIcon
+          iconDisplay="input"
+          styleClass="w-full"
+          appendTo="body"
+        />
+        <label for="circulationDate">Date de circulation</label>
+      </p-floatlabel>
+      <p-button
+        [disabled]="!form.valid"
         styleClass="w-full"
+        label="Calcul devis"
+        (onClick)="startSimulation()"
       />
-      <label for="productCode">Produit</label>
-    </p-floatlabel>
-    <p-floatlabel class="w-full" variant="on">
-      <p-select
-        [autofocus]="false"
-        formControlName="vehicleCategoryCode"
-        inputId="vehicleCategoryCode"
-        [options]="categories()"
-        optionLabel="label"
-        optionValue="code"
-        styleClass="w-full"
-      />
-      <label for="vehicleCategoryCode">Categorie Véhicule</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on">
-      <p-inputnumber
-        class="w-full"
-        formControlName="power"
-        inputId="power"
-      />
-      <label for="power">Puissance</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on">
-      <p-inputnumber
-        class="w-full"
-        formControlName="valueNew"
-        inputId="valueNew"
-        mode="currency"
-        currency="XOF" locale="en-US"
-      />
-      <label for="valueNew">Valeur à neuf</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on">
-      <p-inputnumber
-        class="w-full"
-        formControlName="valueVenal"
-        inputId="valueVenal"
-        mode="currency"
-        currency="XOF" locale="en-US"
-      />
-      <label for="valueNew">Valeur vénale</label>
-    </p-floatlabel>
-    <p-floatlabel variant="on">
-      <p-datepicker
-        formControlName="circulationDate"
-        inputId="circulationDate"
-        showIcon
-        iconDisplay="input"
-        styleClass="w-full"
-      />
-      <label for="circulationDate">Date de circulation</label>
-    </p-floatlabel>
-    <p-button
-      [disabled]="!form.valid"
-      styleClass="w-full"
-      label="Calcul devis"
-      (onClick)="startSimulation()"
-    />
-  </form>
+    </form>
+ }
 </section>
 
 <p-toast />

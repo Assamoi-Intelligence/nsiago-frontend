@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [ButtonModule],
+  imports: [ButtonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

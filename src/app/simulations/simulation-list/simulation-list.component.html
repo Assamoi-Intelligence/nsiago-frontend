@@ -35,7 +35,7 @@
 
         <th pSortableColumn="createdAt" style="min-width: 14rem">
           <div class="flex justify-between items-center">
-              Date
+              Date création
               <p-sortIcon field="createdAt" />
               <p-columnFilter type="date" field="createdAt" display="menu" class="ml-auto" />
           </div>
@@ -46,6 +46,22 @@
               Code produit
               <p-sortIcon field="productCode" />
               <p-columnFilter type="text" field="productCode" display="menu" class="ml-auto" />
+          </div>
+        </th>
+
+        <th pSortableColumn="circulationDate" style="min-width: 14rem">
+          <div class="flex justify-between items-center">
+              Date de circulation
+              <p-sortIcon field="circulationDate" />
+              <p-columnFilter type="date" field="circulationDate" display="menu" class="ml-auto" />
+          </div>
+        </th>
+
+        <th pSortableColumn="power" style="min-width: 14rem">
+          <div class="flex justify-between items-center">
+              Puissance
+              <p-sortIcon field="power" />
+              <p-columnFilter type="numeric" field="power" display="menu" class="ml-auto" />
           </div>
         </th>
 
@@ -72,13 +88,6 @@
               <p-columnFilter type="numeric" field="price" display="menu" class="ml-auto" />
           </div>
         </th>
-        <th pSortableColumn="circulationDate" style="min-width: 14rem">
-          <div class="flex justify-between items-center">
-              Date de circulation
-              <p-sortIcon field="circulationDate" />
-              <p-columnFilter type="date" field="circulationDate" display="menu" class="ml-auto" />
-          </div>
-        </th>
         <th pSortableColumn="endDate" style="min-width: 14rem">
           <div class="flex justify-between items-center">
               Date de fin
@@ -86,6 +95,7 @@
               <p-columnFilter type="date" field="endDate" display="menu" class="ml-auto" />
           </div>
         </th>
+        <th>Actions</th>
       </tr>
   </ng-template>
 
@@ -93,12 +103,20 @@
       <tr>
         <td>{{ simulation.quoteReference }}</td>
         <td>{{ simulation.createdAt | date: 'dd/MM/yyyy' }}</td>
-        <td> {{simulation.productCode }} </td>
+        <td> {{simulation.product.name }} </td>
+        <td>{{ simulation.circulationDate |  date: 'dd/MM/yyyy' }}</td>
+        <td>{{ simulation.power }}</td>
         <td>{{ simulation.valueNew | currency :'XOF' }}</td>
         <td>{{ simulation.valueVenal | currency :'XOF' }}</td>
         <td>{{ simulation.price | currency :'XOF' }}</td>
-        <td>{{ simulation.circulationDate |  date: 'dd/MM/yyyy' }}</td>
         <td>{{ simulation.endDate |  date: 'dd/MM/yyyy' }}</td>
+        <td>
+          @if (simulation.subscription || endDatePassed(simulation)) {
+            <div>__</div>
+          } @else {
+            <p-button severity="info" class="" label="Souscrire" (onClick)="proceedToSubcription(simulation)" />
+          }
+        </td>
       </tr>
   </ng-template>
 </p-table>

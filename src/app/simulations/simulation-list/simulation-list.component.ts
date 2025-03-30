@@ -63,4 +63,20 @@ export class SimulationListComponent implements OnInit {
       closable: true,
     });
   }
+
+  proceedToSubcription(simulation: Simulation) {
+    this.dialogService.open(SimulationAddComponent, {
+      header: "Créer une simulation",
+      focusOnShow: false,
+      width: '40%',
+      closable: true,
+      data: {simulation}
+    });
+  }
+
+  endDatePassed(simulation: Simulation) {
+    const now = Date.now();
+    const endDate = new Date(simulation.endDate).getTime();
+    return endDate <= now;
+  }
 }
