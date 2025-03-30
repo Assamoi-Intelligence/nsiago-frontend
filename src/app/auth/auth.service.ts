@@ -44,7 +44,7 @@ export class AuthService {
       const [header, payload, signature] = token.split('.');
       // Décodage base64 de la partie payload
       const decodedPayload = JSON.parse(atob(payload));
-      this.currentUser.set({email: decodedPayload.email, role: decodedPayload.role});
+      this.currentUser.set({email: decodedPayload.email, role: decodedPayload.role, id: decodedPayload.sub});
       return {
         header: JSON.parse(atob(header)),
         payload: decodedPayload,

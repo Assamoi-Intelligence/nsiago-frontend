@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, WritableSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { AuthService } from '../auth/auth.service';
@@ -11,8 +11,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomeComponent {
   authService = inject(AuthService);
-  isLogged = this.authService.isLogged;
+  isLogged: WritableSignal<boolean>;
 
   constructor() {
+    this.isLogged = this.authService.isLogged;
   }
 }

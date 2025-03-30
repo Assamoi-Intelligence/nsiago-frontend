@@ -1,1 +1,75 @@
-<p>simulation-add works!</p>
+<section class="mt-4">
+  <form [formGroup]="form" class="flex flex-col gap-4" >
+
+    <p-floatlabel class="w-full" variant="on">
+      <p-select
+        [autofocus]="false"
+        formControlName="productCode"
+        inputId="productCode"
+        [options]="products()"
+        optionLabel="name"
+        optionValue="code"
+        styleClass="w-full"
+      />
+      <label for="productCode">Produit</label>
+    </p-floatlabel>
+    <p-floatlabel class="w-full" variant="on">
+      <p-select
+        [autofocus]="false"
+        formControlName="vehicleCategoryCode"
+        inputId="vehicleCategoryCode"
+        [options]="categories()"
+        optionLabel="label"
+        optionValue="code"
+        styleClass="w-full"
+      />
+      <label for="vehicleCategoryCode">Categorie Véhicule</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <p-inputnumber
+        class="w-full"
+        formControlName="power"
+        inputId="power"
+      />
+      <label for="power">Puissance</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <p-inputnumber
+        class="w-full"
+        formControlName="valueNew"
+        inputId="valueNew"
+        mode="currency"
+        currency="XOF" locale="en-US"
+      />
+      <label for="valueNew">Valeur à neuf</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <p-inputnumber
+        class="w-full"
+        formControlName="valueVenal"
+        inputId="valueVenal"
+        mode="currency"
+        currency="XOF" locale="en-US"
+      />
+      <label for="valueNew">Valeur vénale</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <p-datepicker
+        formControlName="circulationDate"
+        inputId="circulationDate"
+        showIcon
+        iconDisplay="input"
+        styleClass="w-full"
+      />
+      <label for="circulationDate">Date de circulation</label>
+    </p-floatlabel>
+    <p-button
+      [disabled]="!form.valid"
+      styleClass="w-full"
+      label="Calcul devis"
+      (onClick)="startSimulation()"
+    />
+  </form>
+</section>
+
+<p-toast />
