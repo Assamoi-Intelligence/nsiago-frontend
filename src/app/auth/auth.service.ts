@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   signUp(email: string, password: string) {
-    const request = this.httpClient.post<{access_token: string}>(`${apiUrl}/auth/signup`, {email, password}).pipe(
+    const request = this.httpClient.post<{access_token: string}>(`${apiUrl}/auth/signup`, {email, password, role: 'AMAZONE'}).pipe(
       retry(3), catchError((err) => throwError(() => new Error(err.message, err)))
     );
     return firstValueFrom(request);
